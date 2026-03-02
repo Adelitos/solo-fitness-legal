@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHOOP Integration UX - Solo Fitness</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fafafa;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.3rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111; }
+    h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #222; }
+    p { font-size: 1rem; color: #333; margin-bottom: 0.75rem; }
+    ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.4rem; color: #333; }
+    .section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #eee; }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      background: #44A047;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .step-content h3 { margin-top: 0; }
+    .mockup {
+      background: #111;
+      color: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      max-width: 360px;
+      font-size: 0.9rem;
+    }
+    .mockup-header {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .mockup-card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .mockup-card-title {
+      font-size: 0.85rem;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+    .mockup-card-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .mockup-card-sub {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.25rem;
+    }
+    .mockup-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .mockup-row .mockup-card { flex: 1; }
+    .green { color: #44A047; }
+    .blue { color: #4A90D9; }
+    .purple { color: #9B59B6; }
+    .orange { color: #E67E22; }
+    .whoop-badge {
+      display: inline-block;
+      background: #44A047;
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+      font-weight: 600;
+    }
+    .integration-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #1a1a1a;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+    .integration-icon {
+      width: 40px;
+      height: 40px;
+      background: #44A047;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .integration-info { flex: 1; }
+    .integration-name { font-weight: 600; font-size: 0.95rem; }
+    .integration-desc { font-size: 0.8rem; color: #888; }
+    .toggle {
+      width: 44px;
+      height: 24px;
+      background: #44A047;
+      border-radius: 12px;
+      position: relative;
+    }
+    .toggle::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    .data-table th, .data-table td {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      color: #666;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WHOOP Integration UX Design</h1>
+    <p class="subtitle">Solo Fitness - How WHOOP data is integrated into the app experience</p>
+
+    <div class="section">
+      <h2>Overview</h2>
+      <p>Solo Fitness is a comprehensive fitness tracking app that aggregates data from multiple sources. The WHOOP integration brings recovery, strain, sleep, and workout data directly into the user's fitness dashboard, providing a unified view of their health metrics.</p>
+      <p>Users connect their WHOOP account via OAuth 2.0 from the Settings screen. Once connected, data syncs automatically every 30 minutes.</p>
+    </div>
+
+    <div class="section">
+      <h2>Connection Flow</h2>
+
+      <div class="flow-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Settings &gt; Apps &amp; Devices</h3>
+          <p>User navigates to Settings and finds WHOOP listed under "Direct Connections" with a toggle to connect.</p>
+          <div class="mockup">
+            <div class="mockup-header">Apps &amp; Devices</div>
+            <p style="color:#999; font-size:0.8rem; margin-bottom:0.75rem;">DIRECT CONNECTIONS</p>
+            <div class="integration-card">
+              <div class="integration-icon">W</div>
+              <div class="integration-info">
+                <div class="integration-name">WHOOP</div>
+                <div class="integration-desc">Recovery, strain, sleep &amp; workout data</div>
+              </div>
+              <div class="toggle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>WHOOP OAuth Authorization</h3>
+          <p>Tapping the toggle opens the WHOOP authorization page in an in-app browser. User logs in and authorizes Solo Fitness to access their data.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Connected &amp; Syncing</h3>
+          <p>After authorization, the app shows "Connected" status with last sync time. Data begins syncing immediately and then every 30 minutes automatically.</p>
+          <div class="mockup">
+            <div class="integration-card">
+              <div class="integration-icon">W</div>
+              <div class="integration-info">
+                <div class="integration-name">WHOOP <span class="whoop-badge">Connected</span></div>
+                <div class="integration-desc">Last synced: 2 min ago</div>
+              </div>
+              <div class="toggle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Data Display</h2>
+      <p>WHOOP data is seamlessly integrated into the existing health dashboard. Users see their WHOOP metrics alongside other health data sources.</p>
+
+      <h3>Daily Health Dashboard</h3>
+      <p>The main tracking screen shows recovery, strain, sleep, and heart rate data from WHOOP in the daily metrics cards:</p>
+
+      <div class="mockup">
+        <div class="mockup-header">Today's Health</div>
+
+        <div class="mockup-row">
+          <div class="mockup-card">
+            <div class="mockup-card-title">Recovery</div>
+            <div class="mockup-card-value green">78%</div>
+            <div class="mockup-card-sub">From WHOOP</div>
+          </div>
+          <div class="mockup-card">
+            <div class="mockup-card-title">Strain</div>
+            <div class="mockup-card-value orange">14.2</div>
+            <div class="mockup-card-sub">Day strain</div>
+          </div>
+        </div>
+
+        <div class="mockup-row">
+          <div class="mockup-card">
+            <div class="mockup-card-title">Sleep Score</div>
+            <div class="mockup-card-value purple">85%</div>
+            <div class="mockup-card-sub">7h 42m total</div>
+          </div>
+          <div class="mockup-card">
+            <div class="mockup-card-title">Resting HR</div>
+            <div class="mockup-card-value blue">52</div>
+            <div class="mockup-card-sub">bpm</div>
+          </div>
+        </div>
+
+        <div class="mockup-card">
+          <div class="mockup-card-title">HRV</div>
+          <div class="mockup-card-value blue">68 <span style="font-size:0.8rem;font-weight:400;">ms</span></div>
+          <div class="mockup-card-sub">Heart rate variability</div>
+        </div>
+      </div>
+
+      <h3>Sleep Breakdown</h3>
+      <p>WHOOP sleep stage data (awake, light, REM, deep) is displayed in the sleep detail view:</p>
+
+      <div class="mockup">
+        <div class="mockup-header">Sleep Details</div>
+        <div class="mockup-card">
+          <div class="mockup-card-title">Sleep Stages</div>
+          <div style="margin-top:0.5rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+              <span style="color:#ccc;">Awake</span><span>23 min</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+              <span style="color:#7EB8DA;">Light</span><span>3h 12m</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+              <span style="color:#9B59B6;">REM</span><span>1h 48m</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span style="color:#2C3E50;">Deep</span><span>2h 42m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>WHOOP Data Mapping</h2>
+      <p>The following WHOOP API data is used in Solo Fitness:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>WHOOP Data</th>
+            <th>App Feature</th>
+            <th>Display</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Recovery score</td>
+            <td>Readiness score</td>
+            <td>Percentage on dashboard</td>
+          </tr>
+          <tr>
+            <td>Day strain</td>
+            <td>Stress/exertion score</td>
+            <td>Mapped to 0-100 scale</td>
+          </tr>
+          <tr>
+            <td>Resting heart rate</td>
+            <td>Heart rate card</td>
+            <td>BPM on dashboard</td>
+          </tr>
+          <tr>
+            <td>HRV (RMSSD)</td>
+            <td>HRV metric</td>
+            <td>Milliseconds on dashboard</td>
+          </tr>
+          <tr>
+            <td>Sleep performance</td>
+            <td>Sleep score</td>
+            <td>Percentage + duration</td>
+          </tr>
+          <tr>
+            <td>Sleep stages</td>
+            <td>Sleep breakdown</td>
+            <td>Minutes per stage</td>
+          </tr>
+          <tr>
+            <td>Workout data</td>
+            <td>Workout history</td>
+            <td>Activity + calories</td>
+          </tr>
+          <tr>
+            <td>SpO2</td>
+            <td>Blood oxygen</td>
+            <td>Percentage</td>
+          </tr>
+          <tr>
+            <td>Skin temp</td>
+            <td>Body temperature</td>
+            <td>Celsius/Fahrenheit</td>
+          </tr>
+          <tr>
+            <td>Body measurements</td>
+            <td>Profile metrics</td>
+            <td>Height, weight, BMI</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section" style="border-bottom:none; margin-bottom:0; padding-bottom:0;">
+      <h2>Disconnect Flow</h2>
+      <p>Users can disconnect WHOOP at any time from Settings &gt; Apps &amp; Devices by toggling off the WHOOP connection. A confirmation dialog ensures no accidental disconnects. After disconnecting, no further data is fetched from WHOOP. Previously synced data remains in the app.</p>
+    </div>
+  </div>
+</body>
+</html>
